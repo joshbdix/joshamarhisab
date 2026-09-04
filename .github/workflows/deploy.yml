@@ -36,7 +36,16 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
-
+     
+      - name: Check build output
+        run: |
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Files ==="
+          ls -la
+          echo "=== Directories ==="
+          find . -maxdepth 2 -type d | sort
+      
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
