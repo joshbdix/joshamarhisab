@@ -18,6 +18,7 @@ import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedSearchRouteImport } from './routes/_authenticated/search'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedMonthMonthIdRouteImport } from './routes/_authenticated/month.$monthId'
+import { Route as ApiPublicTelegramNotifyRouteImport } from './routes/api/public/telegram-notify'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -64,6 +65,11 @@ const AuthenticatedMonthMonthIdRoute =
     path: '/month/$monthId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicTelegramNotifyRoute = ApiPublicTelegramNotifyRouteImport.update({
+  id: '/api/public/telegram-notify',
+  path: '/api/public/telegram-notify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof AuthenticatedSearchRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/month/$monthId': typeof AuthenticatedMonthMonthIdRoute
+  '/api/public/telegram-notify': typeof ApiPublicTelegramNotifyRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/': typeof AuthenticatedIndexRoute
   '/month/$monthId': typeof AuthenticatedMonthMonthIdRoute
+  '/api/public/telegram-notify': typeof ApiPublicTelegramNotifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/month/$monthId': typeof AuthenticatedMonthMonthIdRoute
+  '/api/public/telegram-notify': typeof ApiPublicTelegramNotifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/month/$monthId'
+    | '/api/public/telegram-notify'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/'
     | '/month/$monthId'
+    | '/api/public/telegram-notify'
   id:
     | '__root__'
     | '/_authenticated'
@@ -129,12 +140,14 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/_authenticated/'
     | '/_authenticated/month/$monthId'
+    | '/api/public/telegram-notify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiPublicTelegramNotifyRoute: typeof ApiPublicTelegramNotifyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -202,6 +215,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMonthMonthIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/telegram-notify': {
+      id: '/api/public/telegram-notify'
+      path: '/api/public/telegram-notify'
+      fullPath: '/api/public/telegram-notify'
+      preLoaderRoute: typeof ApiPublicTelegramNotifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -230,6 +250,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiPublicTelegramNotifyRoute: ApiPublicTelegramNotifyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

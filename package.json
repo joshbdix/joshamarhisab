@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build --config vite.static.config.ts && cp dist/index.html dist/404.html",
     "build:dev": "vite build --mode development",
-    "preview": "vite preview",
+    "preview": "vite preview --config vite.static.config.ts",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:ssr": "vite build"
   },
   "overrides": {
     "rolldown": "1.2.1"
