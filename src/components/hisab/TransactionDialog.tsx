@@ -71,10 +71,10 @@ export function TransactionDialog({
 
   const save = async () => {
     const amountNum = Number(amount);
-    if (!date) return toast.error("তারিখ নির্বাচন করুন।");
-    if (!monthId) return toast.error("প্রথমে একটি মাসের হিসাব যোগ করুন।");
-    if (!amountNum || amountNum <= 0) return toast.error("টাকার পরিমাণ দিন।");
-    if (!sourceId) return toast.error("উৎস নির্বাচন করুন।");
+    if (!date) return void toast.error("তারিখ নির্বাচন করুন।");
+    if (!monthId) return void toast.error("প্রথমে একটি মাসের হিসাব যোগ করুন।");
+    if (!amountNum || amountNum <= 0) return void toast.error("টাকার পরিমাণ দিন।");
+    if (!sourceId) return void toast.error("উৎস নির্বাচন করুন।");
 
     setBusy(true);
     try {

@@ -16,7 +16,8 @@ export const BANGLA_MONTHS = [
 /** Indian/Bangladeshi digit grouping: 1,80,000 */
 export function groupBD(value: number): string {
   const negative = value < 0;
-  const [intPart, decPart] = Math.abs(value).toFixed(2).split(".");
+  const [rawInt, decPart] = Math.abs(value).toFixed(2).split(".");
+  const intPart = rawInt ?? "0";
   let out = intPart;
   if (intPart.length > 3) {
     const last3 = intPart.slice(-3);

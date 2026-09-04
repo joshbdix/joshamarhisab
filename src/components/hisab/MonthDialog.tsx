@@ -78,14 +78,14 @@ export function MonthDialog({
   const finalReceivable = baseNum + (adjType === "decrease" ? -adjNum : adjNum);
 
   const save = async () => {
-    if (!year) return toast.error("বছর দিন।");
-    if (!month) return toast.error("মাস নির্বাচন করুন।");
-    if (baseNum <= 0) return toast.error("মূল পাওনার পরিমাণ দিন।");
+    if (!year) return void toast.error("বছর দিন।");
+    if (!month) return void toast.error("মাস নির্বাচন করুন।");
+    if (baseNum <= 0) return void toast.error("মূল পাওনার পরিমাণ দিন।");
 
     const duplicate = months.some(
       (m) => m.year === Number(year) && m.month === Number(month) && m.id !== editing?.id,
     );
-    if (duplicate) return toast.error("এই মাসের হিসাব আগেই যোগ করা হয়েছে।");
+    if (duplicate) return void toast.error("এই মাসের হিসাব আগেই যোগ করা হয়েছে।");
 
     setBusy(true);
     try {

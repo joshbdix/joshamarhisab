@@ -42,13 +42,13 @@ function SettingsPage() {
         supabase.from("profiles").select("name").eq("user_id", user.id).maybeSingle(),
         supabase
           .from("telegram_settings")
-          .select("chat_id, enabled")
+          .select("chat_id, notifications_enabled")
           .eq("user_id", user.id)
           .maybeSingle(),
       ]);
       setName(profile?.name ?? "");
       setChatId(tg?.chat_id ?? "");
-      setEnabled(tg?.enabled ?? false);
+      setEnabled(tg?.notifications_enabled ?? false);
     })();
   }, [user]);
 
@@ -68,7 +68,10 @@ function SettingsPage() {
     setBusy(true);
     const { error } = await supabase
       .from("telegram_settings")
-      .upsert({ user_id: user.id, chat_id: chatId, enabled }, { onConflict: "user_id" });
+      .upsert(
+        { user_id: user.id, chat_id: chatId, notifications_enabled: enabled },
+        { onConflict: "user_id" },
+      );
     setBusy(false);
     if (error) toast.error("সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।");
     else toast.success("টেলিগ্রাম সেটিংস সংরক্ষণ করা হয়েছে।");
