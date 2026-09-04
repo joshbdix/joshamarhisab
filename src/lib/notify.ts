@@ -1,4 +1,4 @@
-import { sendTelegramMessage } from "@/lib/telegram.functions";
+import { supabase } from "@/integrations/supabase/client";
 import { formatDateBangla, formatMonthLabel, formatTaka } from "@/lib/format";
 import type { MonthSummary } from "@/lib/hisab";
 
@@ -38,7 +38,19 @@ export function buildTransactionMessage(
 
 export async function notifyTelegram(text: string, type = "transaction") {
   try {
-    return await sendTelegramMessage({ data: { text, type } });
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token;
+    if (!token) return { ok: false, error: "Not authenticated" };
+
+    // Same-origin on the hosted app; VITE_API_BASE_URL points the static
+    // GitHub Pages build at the hosted backend endpoint.
+    const base = (import.meta.env["VITE_API_BASE_URL"] as string | undefined) ?? "";
+    const res = await fetch(`${base}/api/public/telegram-notify`, {
+      method: "POST",
+      headers: { "content-type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ text, type }),
+    });
+    return (await res.json()) as { ok: boolean; error?: string | null; skipped?: boolean };
   } catch {
     return { ok: false, error: "Telegram request failed" };
   }
