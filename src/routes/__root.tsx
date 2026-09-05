@@ -101,7 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 // The static SPA build (GitHub Pages) mounts inside an existing <div id="root">,
 // so the shell must NOT render <html>/<body> there — nested document tags break
 // the DOM and make React's event handling (typing in inputs) misbehave.
-const IS_STATIC_SPA = import.meta.env.VITE_STATIC_SPA === "true";
+const IS_STATIC_SPA = import.meta.env["VITE_STATIC_SPA"] === "true";
 
 function RootShell({ children }: { children: ReactNode }) {
   if (IS_STATIC_SPA) {
