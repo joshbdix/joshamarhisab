@@ -59,6 +59,7 @@ export default defineConfig({
   // (non-secret) Supabase config so the SPA works without a server runtime.
   define: {
     "process.env": "{}",
+    "import.meta.env.VITE_STATIC_SPA": JSON.stringify("true"),
     "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(SUPABASE_URL),
     "import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY": JSON.stringify(SUPABASE_PUBLISHABLE_KEY),
     "import.meta.env.VITE_SUPABASE_PROJECT_ID": JSON.stringify(envValue("VITE_SUPABASE_PROJECT_ID")),
